@@ -1,44 +1,61 @@
-#include <iostream>
-#include "ConsoleUtils.h"
+#include "FileCopier.h"  
+#include <iostream>  
 using namespace std;
 
-//*****************************************
-//					MAIN
-//*****************************************
-
-int main()
-{
-#pragma region header
-	ConsoleUtils utils;
-
-	//--- setup console
-	utils.enableVirtualTerminal();
-	utils.setBackgroundColor(ConsoleColor::Blue);
-	utils.clearConsole();
-
-	//--- show app title
-	utils.setForegroundColor(ConsoleColor::BrightWhite);
-	cout << "+-------------------------------+\n";
-	cout << "| App Name                      |\n";
-	cout << "+-------------------------------+\n\n";
-	utils.setForegroundColor(ConsoleColor::White);
-#pragma endregion
-
-
-	//--- App BODY --------------------------------
-
-	
-	//---------------------------------------------
-
-
-#pragma region footer
-	//--- show credits
-	utils.showCredits();
-
-	system("pause");
-	// Disable option in Tools->Options->Debugging->General->"Automatically close the console when debugging stops"
-
-	//--- return / finish
-	return 0;
-#pragma endregion
+FileCopier::FileCopier() {
+	SOURCE_FILE_Path = "PROJECT REPORT.docx";
+	DESTINATION_FILE_Path = "destination.txt";
 }
+
+FileCopier::~FileCopier() {
+	closeFiles();
+}
+
+bool FileCopier::openSrcFile() {
+	srcFile.open(SOURCE_FILE_Path, ios::binary);
+	if (!srcFile.is_open()) {
+		cerr << "Failed to open file: " << SOURCE_FILE_Path << '\n';
+		return false;
+	}
+	return true;
+}
+
+bool FileCopier::readSrcFileChunk() {
+	srcFile.read(buffer, CHUNK_SIZE);
+	if (srcFile)
+		return true;
+	else
+		return false;
+}
+
+void FileCopier::closeSrcFile() {
+	if (srcFile.is_open()) {
+		srcFile.close();
+	}
+}
+
+bool FileCopier::openDstFile() {
+	dstFile.open(DESTINATION_FILE_Path, ios::binary);
+	if (!dstFile.is_open()) {
+		cerr << "Failed to open file: " << DESTINATION_FILE_Path << '\n';
+		return false;
+	}
+	return true;
+}
+
+bool FileCopier::writeDstFileChunk(int bytesToWrite) {
+	dstFile.write(buffer, bytesToWrite);
+	return true;
+}
+
+void FileCopier::closeDstFile() {
+	if (dstFile.is_open()) {
+		dstFile.close();
+	}
+}
+
+void FileCopier::closeFiles() {
+	closeSrcFile();
+	closeDstFile();
+}
+

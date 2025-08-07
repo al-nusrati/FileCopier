@@ -125,12 +125,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DerivedCredits.cpp" />
     <ClCompile Include="FileCopier.cpp" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Libraries\ConsoleUtils\ConsoleUtils.vcxproj">
       <Project>{5177ff91-36e4-4397-a349-40ca7a647896}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="DerivedCredits.h" />
+    <ClInclude Include="FileCopier.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
