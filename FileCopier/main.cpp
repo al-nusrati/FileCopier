@@ -43,6 +43,7 @@ int main()
 			copier.ProgressBar(176, 50);
 			while (true) {
 				copier.readSrcFileChunk();
+
 				int bytesRead = copier.getBytesRead();
 				totalBytes += bytesRead;
 
